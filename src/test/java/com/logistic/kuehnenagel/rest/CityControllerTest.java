@@ -1,6 +1,6 @@
 package com.logistic.kuehnenagel.rest;
 
-import com.logistic.kuehnenagel.dto.CityGetDTO;
+import com.logistic.kuehnenagel.dto.CityGetDto;
 import com.logistic.kuehnenagel.dto.CityPostDto;
 import com.logistic.kuehnenagel.error.ApiErrorResponse;
 import com.logistic.kuehnenagel.util.RestResponsePage;
@@ -37,14 +37,14 @@ public class CityControllerTest {
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(List.of(MediaType.APPLICATION_JSON));
         HttpEntity<String> entity = new HttpEntity<>(headers);
-        ResponseEntity<CityGetDTO> responseEntity = restTemplate.exchange( "http://localhost:" + port + "/api/v1/cities/Tokyo",
+        ResponseEntity<CityGetDto> responseEntity = restTemplate.exchange( "http://localhost:" + port + "/api/v1/cities/Tokyo",
                 HttpMethod.GET,
                 entity,
-                CityGetDTO.class);
+                CityGetDto.class);
 
         assertEquals(HttpStatus.OK.value(), responseEntity.getStatusCode().value());
 
-        CityGetDTO cityGetDTO = responseEntity.getBody();
+        CityGetDto cityGetDTO = responseEntity.getBody();
 
         assertNotNull(responseEntity);
         assertEquals(1, cityGetDTO.getId());
@@ -71,14 +71,14 @@ public class CityControllerTest {
         headers.setAccept(List.of(MediaType.APPLICATION_JSON));
         CityPostDto cityPostDto = new CityPostDto(2L, "Jakarta2", "http://test.com/1.png");
         HttpEntity<CityPostDto> entity = new HttpEntity<>(cityPostDto, headers);
-        ResponseEntity<CityGetDTO> responseEntity = restTemplate.exchange( "http://localhost:" + port + "/api/v1/cities/",
+        ResponseEntity<CityGetDto> responseEntity = restTemplate.exchange( "http://localhost:" + port + "/api/v1/cities/",
                 HttpMethod.POST,
                 entity,
-                CityGetDTO.class);
+                CityGetDto.class);
 
         assertEquals(HttpStatus.OK.value(), responseEntity.getStatusCode().value());
 
-        CityGetDTO cityGetDTO = responseEntity.getBody();
+        CityGetDto cityGetDTO = responseEntity.getBody();
 
         assertNotNull(responseEntity);
         assertEquals(2L, cityGetDTO.getId());
@@ -105,16 +105,16 @@ public class CityControllerTest {
         headers.setAccept(List.of(MediaType.APPLICATION_JSON));
         HttpEntity<String> entity = new HttpEntity<>(headers);
 
-        ParameterizedTypeReference<RestResponsePage<CityGetDTO>> responseType = new ParameterizedTypeReference<>() { };
+        ParameterizedTypeReference<RestResponsePage<CityGetDto>> responseType = new ParameterizedTypeReference<>() { };
 
-        ResponseEntity<RestResponsePage<CityGetDTO>> responseEntity = restTemplate.exchange("http://localhost:" + port + "/api/v1/cities?size=10&page0",
+        ResponseEntity<RestResponsePage<CityGetDto>> responseEntity = restTemplate.exchange("http://localhost:" + port + "/api/v1/cities?size=10&page0",
                 HttpMethod.GET,
                 entity,
                 responseType);
 
         assertEquals(HttpStatus.OK.value(), responseEntity.getStatusCode().value());
 
-        RestResponsePage<CityGetDTO> page = responseEntity.getBody();
+        RestResponsePage<CityGetDto> page = responseEntity.getBody();
         assertNotNull(page);
         assertEquals(96, page.getTotalPages());
         assertEquals(10, page.getContent().size());
