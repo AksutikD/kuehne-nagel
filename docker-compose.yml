@@ -1,0 +1,31 @@
+version: "3.8"
+
+services:
+  postgres:
+    container_name: kuehne-nagel-db
+    image: postgres:14.1-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB: kuehne_nagel_db
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+
+  spring-boot-app:
+    build:
+      context: .
+      args:
+        JAR_FILE: ./target/kuehne-nagel-0.0.1-SNAPSHOT.jar
+    container_name: kuehne-nagel-app
+    environment:
+      PROFILE: local
+      DATASOURCE_URL: jdbc:postgresql://postgres:5432/kuehne_nagel_db?reWriteBatchedInserts=true
+      DATASOURCE_USERNAME: postgres
+      DATASOURCE_PASSWORD: postgres
+      DDRIVER_CLASS_NAME: org.postgresql.Driver
+      HIBERNATE_DDL_AUTO: update
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres

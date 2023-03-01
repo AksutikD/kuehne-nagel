@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    url: ${DATASOURCE_URL:jdbc:postgresql://localhost:5432/kuehne_nagel_db?reWriteBatchedInserts=true}
+    username: ${DATASOURCE_USERNAME:postgres}
+    password: ${DATASOURCE_PASSWORD:postgres}
+    driver-class-name: ${DDRIVER_CLASS_NAME:org.postgresql.Driver}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: ${HIBERNATE_DDL_AUTO:update}
+    properties:
+      hibernate:
+        order_updates: true
+#        generate_statistics: true
+        jdbc:
+          batch_size: 100
+#    show-sql: true
+server:
+  port: 8080
