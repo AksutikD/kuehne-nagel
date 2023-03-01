@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -22,7 +21,7 @@ public class CsvService {
     @Value("${spring.jpa.properties.hibernate.jdbc.batch_size}")
     private int batchSize;
 
-    public <T> Stream<List<T>> getStreamFromCSV(Reader reader, Class<T> tClass) throws IOException {
+    public <T> Stream<List<T>> getStreamFromCSV(Reader reader, Class<T> tClass) {
         CsvToBean<T> csvToBean =  new CsvToBeanBuilder<T>(reader)
                 .withType(tClass)
                 .withIgnoreLeadingWhiteSpace(true)

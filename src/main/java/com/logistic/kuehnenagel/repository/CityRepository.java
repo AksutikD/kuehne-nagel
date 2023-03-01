@@ -12,8 +12,6 @@ public interface CityRepository extends org.springframework.data.repository.Repo
 
     boolean existsByName(String name);
 
-    City save(City city);
-
     Iterable<City> saveAll(Iterable<City> entities);
 
     Optional<City> findByName(String name);
