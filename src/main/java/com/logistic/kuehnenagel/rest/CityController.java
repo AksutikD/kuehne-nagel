@@ -38,7 +38,7 @@ public class CityController {
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public Page<CityGetDto> getAll(@RequestParam(defaultValue = "0") @PositiveOrZero @NotNull int page,
+    public Page<CityGetDto> getAll(@RequestParam(defaultValue = "0") @PositiveOrZero int page,
                                    @RequestParam(defaultValue = "10") @Min(1) @Max(30) int size) {
         return cityService.getAll(PageRequest.of(page, size)).map(CityConverter::cityToGetDtoConvert);
     }
