@@ -43,7 +43,7 @@ public class CityController {
         return cityService.getAll(PageRequest.of(page, size)).map(CityConverter::cityToGetDtoConvert);
     }
 
-    @PostMapping(value = "/", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public CityGetDto uploadCity(@RequestBody @Valid CityPostDto cityPostDto) {
         return CityConverter.cityToGetDtoConvert(cityService.uploadCity(cityPostDto));
     }
