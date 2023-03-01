@@ -26,7 +26,7 @@ import java.util.stream.Stream;
 
 
 @Configuration
-@Profile("local")
+@Profile({"local", "test"})
 @Slf4j
 @RequiredArgsConstructor
 public class DatabaseConfig {
@@ -49,6 +49,7 @@ public class DatabaseConfig {
                     List<CsvCity> cityListUnique = csvCitiesList.stream()
                             .filter(distinctByKey(CsvCity::getName)).toList();
                     List<City> newCities = cityListUnique.stream()
+                            .filter(csvCity -> csvCity.getImageUrl().length() <= 255)
                             .filter(city -> !cityService.existsByName(city.getName()))
                             .map(CityConverter::csvCityToCityConvert)
                             .toList();

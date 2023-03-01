@@ -14,6 +14,8 @@ public interface CityRepository extends org.springframework.data.repository.Repo
 
     Iterable<City> saveAll(Iterable<City> entities);
 
+    Optional<City> findById(Long id);
+
     Optional<City> findByName(String name);
 
     Page<City> findAll(Pageable pageable);

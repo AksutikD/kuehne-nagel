@@ -1,26 +1,29 @@
 package com.logistic.kuehnenagel.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.extern.jackson.Jacksonized;
-import org.springframework.web.multipart.MultipartFile;
 
-@Jacksonized
 @AllArgsConstructor
 @Getter
 @Setter
 @Builder
 public class CityPostDto {
 
-    @JsonProperty("old_name")
-    private String oldName;
+    @Positive
+    @NotNull
+    private Long id;
 
-    @JsonProperty("new_name")
-    private String newName;
+    @NotBlank
+    @Size(min = 1, max = 50, message = "Name must be between 1 and 50 characters long")
+    private String name;
 
-    @JsonProperty("file")
-    private MultipartFile multipartFile;
+    @NotBlank
+    @Size(min = 12, max = 255, message = "Name must be between 12 and 255 characters long")
+    private String imageUrl;
 }

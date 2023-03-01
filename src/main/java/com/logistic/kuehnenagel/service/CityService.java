@@ -10,7 +10,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -23,6 +22,12 @@ public class CityService {
     public City getByName(final String name) {
         return cityRepository.findByName(name).orElseThrow(() ->
                 new ResourceNotFoundException("City with '" + name + "' name not found."));
+    }
+
+    @Transactional(readOnly = true)
+    public City getById(final Long id) {
+        return cityRepository.findById(id).orElseThrow(() ->
+                new ResourceNotFoundException("City with '" + id + "' id not found."));
     }
 
     @Transactional
@@ -41,11 +46,11 @@ public class CityService {
     }
 
     @Transactional
-    public City uploadCity(final CityPostDto cityPostDto) throws IOException {
-        City city = getByName(cityPostDto.getOldName());
+    public City uploadCity(final CityPostDto cityPostDto) {
+        City city = getById(cityPostDto.getId());
 
-        city.setName(cityPostDto.getNewName());
-        city.setImage(cityPostDto.getMultipartFile().getBytes());
+        city.setName(cityPostDto.getName());
+        city.setImageUrl(cityPostDto.getImageUrl());
 
         return city;
     }

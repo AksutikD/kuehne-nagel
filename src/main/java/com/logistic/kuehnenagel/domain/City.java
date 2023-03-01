@@ -5,7 +5,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,7 +26,6 @@ public class City {
     @Column(name = "name", unique = true, length = 50, nullable = false)
     private String name;
 
-    @Lob
-    @Column(name = "image")
-    private byte[] image;
+    @Column(name = "image_url")
+    private String imageUrl;
 }

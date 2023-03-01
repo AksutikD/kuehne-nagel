@@ -12,6 +12,6 @@ public class CsvCity {
     @CsvBindByName
     private String name;
 
-    @CsvBindByName
-    private String photo;
+    @CsvBindByName(column = "photo")
+    private String imageUrl;
 }
