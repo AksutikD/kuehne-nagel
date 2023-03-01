@@ -9,5 +9,4 @@ Repository for Kuehne-nagel test project
    - Maven 3.8+
 2. Run in terminal or through the IDEA **mvn clean install**
 3. Run in terminal **docker-compose up -d**, or run [docker-compose](docker-compose.yml) via IDEA
-4. Run in terminal **docker-compose up -d**, or run [docker-compose](docker-compose.yml) via IDEA
-5. By default, server is running on [localhost:8080](http://localhost:8080)
+4. By default, server is running on [localhost:8080](http://localhost:8080)
