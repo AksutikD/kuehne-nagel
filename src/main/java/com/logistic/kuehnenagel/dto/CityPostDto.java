@@ -24,6 +24,6 @@ public class CityPostDto {
     private String name;
 
     @NotBlank
-    @Size(max = 500, message = "Name must be between 12 and 500 characters long")
+    @Size(max = 750, message = "Name must be between 12 and 750 characters long")
     private String imageUrl;
 }
