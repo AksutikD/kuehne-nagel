@@ -4,6 +4,9 @@ import java.util.Optional;
 
 import static lombok.Lombok.checkNotNull;
 
+/**
+ * Global exception class for our application to prevent
+ */
 public class ServiceException extends RuntimeException {
 
     private final ServiceError error;

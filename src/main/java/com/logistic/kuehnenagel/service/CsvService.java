@@ -3,6 +3,7 @@ package com.logistic.kuehnenagel.service;
 
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
+import jakarta.persistence.criteria.Root;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,14 @@ public class CsvService {
     @Value("${spring.jpa.properties.hibernate.jdbc.batch_size}")
     private int batchSize;
 
+    /**
+     * Creates <code>Stream</code> statement.
+     *
+     * @param reader Stream reader.
+     * @param tClass the type of the object for CSV mapping. See {@link com.logistic.kuehnenagel.domain.csv.CsvCity} f.e.
+     *
+     * @return a specification or null if a condition parameter wasn't passed
+     */
     public <T> Stream<List<T>> getStreamFromCSV(Reader reader, Class<T> tClass) {
         CsvToBean<T> csvToBean =  new CsvToBeanBuilder<T>(reader)
                 .withType(tClass)

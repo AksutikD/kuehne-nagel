@@ -11,6 +11,9 @@ import java.util.Locale;
 @RequiredArgsConstructor
 @AllArgsConstructor
 @Getter
+/**
+ * Class contains all thrown error types by our application.
+ */
 public enum ServiceError {
 
     MISSING_OBJECT_BY_ID(HttpStatus.NOT_FOUND, "[{0}] with an id [{1}] not found.");
