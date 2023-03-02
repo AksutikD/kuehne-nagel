@@ -23,6 +23,9 @@ import java.util.stream.Stream;
 @Configuration
 @Profile({"local", "test"})
 @RequiredArgsConstructor
+/**
+ * Configuration class to populate db from csv file during starting the server.
+ */
 public class DatabaseConfig {
 
     @Value("classpath:static/cities.csv")

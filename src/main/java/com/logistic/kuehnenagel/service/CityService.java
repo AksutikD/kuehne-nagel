@@ -7,7 +7,6 @@ import com.logistic.kuehnenagel.error.ServiceError;
 import com.logistic.kuehnenagel.error.ServiceException;
 import com.logistic.kuehnenagel.repository.CityRepository;
 import com.logistic.kuehnenagel.util.SearchUtils;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -36,7 +35,6 @@ public class CityService {
         cityRepository.saveAll(cityList);
     }
 
-    @Transactional(readOnly = true)
     public Page<City> getAll(final CitySearchDto citySearchDto, final Pageable pageable) {
         Specification<City> specification = SearchUtils.createEqualsStatement(citySearchDto::getName, "name");
 
