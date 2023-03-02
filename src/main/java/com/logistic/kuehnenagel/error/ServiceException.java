@@ -2,8 +2,6 @@ package com.logistic.kuehnenagel.error;
 
 import java.util.Optional;
 
-import static lombok.Lombok.checkNotNull;
-
 /**
  * Global exception class for our application to prevent
  */
@@ -42,7 +40,7 @@ public class ServiceException extends RuntimeException {
         private Object[] messageParameters;
 
         private Builder(ServiceError error) {
-            this.error = checkNotNull(error, "Service exception's error cannot be null");
+            this.error = error;
             this.cause = null;
             this.messageParameters = new Object[0];
         }
