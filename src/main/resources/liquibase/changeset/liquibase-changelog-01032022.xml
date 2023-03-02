@@ -1,14 +1,15 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
-    <changeSet author="dmitriyaksutik (generated)" id="1677694156310-1">
+    <changeSet author="dmitriyaksutik" id="001-Create city sequence">
         <createSequence cacheSize="1" cycle="false" dataType="bigint" incrementBy="50" maxValue="9223372036854775807" minValue="1" sequenceName="city_seq" startValue="1"/>
     </changeSet>
-    <changeSet author="dmitriyaksutik (generated)" id="1677694156310-2">
+    <changeSet author="dmitriyaksutik" id="002-Create city table">
         <createTable tableName="city">
             <column name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="city_pkey"/>
             </column>
-            <column name="image_url" type="VARCHAR(255)"/>
-            <column name="name" type="VARCHAR(50)">
+            <column name="image_url" type="VARCHAR(750)"/>
+            <column name="name" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
         </createTable>

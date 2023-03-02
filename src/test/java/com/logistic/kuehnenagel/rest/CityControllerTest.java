@@ -38,7 +38,7 @@ public class CityControllerTest {
     private CityService cityService;
 
     @Test
-    public void uploadCityTest() {
+    public void updateCitySuccessTest() {
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(List.of(MediaType.APPLICATION_JSON));
         CityPostDto cityPostDto = new CityPostDto(2L, "Jakarta2", "http://test.com/1.png");
@@ -63,9 +63,14 @@ public class CityControllerTest {
         assertEquals(2L, cityGetDTO.getId());
         assertEquals("Jakarta2", cityGetDTO.getName());
         assertEquals("http://test.com/1.png", cityGetDTO.getImageUrl());
+    }
 
-        cityPostDto = new CityPostDto(null, "Jakarta2", "http://test.com/1.png");
-        entity = new HttpEntity<>(cityPostDto, headers);
+    @Test
+    public void updateCityFailureTest() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setAccept(List.of(MediaType.APPLICATION_JSON));
+        CityPostDto cityPostDto = new CityPostDto(null, "Jakarta2", "http://test.com/1.png");
+        HttpEntity<CityPostDto> entity = new HttpEntity<>(cityPostDto, headers);
         ResponseEntity<ApiErrorResponse> responseEntityError = restTemplate.exchange( "http://localhost:" + port + "/api/v1/cities/",
                 HttpMethod.POST,
                 entity,
@@ -79,14 +84,14 @@ public class CityControllerTest {
     }
 
     @Test
-    public void getAllTest() {
+    public void getAllCitiesByDefaultSuccessTest() {
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(List.of(MediaType.APPLICATION_JSON));
         HttpEntity<String> entity = new HttpEntity<>(headers);
 
         ParameterizedTypeReference<RestResponsePage<CityGetDto>> responseType = new ParameterizedTypeReference<>() { };
 
-        ResponseEntity<RestResponsePage<CityGetDto>> responseEntity = restTemplate.exchange("http://localhost:" + port + "/api/v1/cities?size=10&page0",
+        ResponseEntity<RestResponsePage<CityGetDto>> responseEntity = restTemplate.exchange("http://localhost:" + port + "/api/v1/cities",
                 HttpMethod.GET,
                 entity,
                 responseType);
@@ -95,30 +100,48 @@ public class CityControllerTest {
 
         RestResponsePage<CityGetDto> page = responseEntity.getBody();
         assertNotNull(page);
-        assertEquals(98, page.getTotalPages());
+        assertEquals(100, page.getTotalPages());
         assertEquals(10, page.getContent().size());
+    }
 
-        entity = new HttpEntity<>(headers);
-        responseEntity = restTemplate.exchange( "http://localhost:" + port + "/api/v1/cities?name=Changsha",
+    @Test
+    public void getAllCitiesByNameSuccessTest() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setAccept(List.of(MediaType.APPLICATION_JSON));
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+
+        ParameterizedTypeReference<RestResponsePage<CityGetDto>> responseType = new ParameterizedTypeReference<>() { };
+
+        ResponseEntity<RestResponsePage<CityGetDto>> responseEntity = restTemplate.exchange( "http://localhost:" + port + "/api/v1/cities?name=Changsha",
                 HttpMethod.GET,
                 entity,
                 responseType);
 
         assertEquals(HttpStatus.OK.value(), responseEntity.getStatusCode().value());
 
-        page = responseEntity.getBody();
+        RestResponsePage<CityGetDto> page = responseEntity.getBody();
+
         assertNotNull(page);
         assertEquals(1, page.getTotalPages());
         assertEquals(2, page.getContent().size());
+    }
 
-        responseEntity = restTemplate.exchange( "http://localhost:" + port + "/api/v1/cities?name=asdasd",
+    @Test
+    public void getAllCitiesByNotExistedNameSuccess() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setAccept(List.of(MediaType.APPLICATION_JSON));
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+
+        ParameterizedTypeReference<RestResponsePage<CityGetDto>> responseType = new ParameterizedTypeReference<>() { };
+
+        ResponseEntity<RestResponsePage<CityGetDto>> responseEntity = restTemplate.exchange( "http://localhost:" + port + "/api/v1/cities?name=asdasd",
                 HttpMethod.GET,
                 entity,
                 responseType);
 
         assertEquals(HttpStatus.OK.value(), responseEntity.getStatusCode().value());
 
-        page = responseEntity.getBody();
+        RestResponsePage<CityGetDto> page = responseEntity.getBody();
         assertNotNull(page);
         assertEquals(0, page.getTotalPages());
         assertEquals(0, page.getContent().size());

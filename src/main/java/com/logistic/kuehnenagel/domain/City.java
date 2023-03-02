@@ -23,9 +23,10 @@ public class City {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "name", length = 50, nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "image_url")
+    //Max length in file is 745
+    @Column(name = "image_url", length = 750)
     private String imageUrl;
 }

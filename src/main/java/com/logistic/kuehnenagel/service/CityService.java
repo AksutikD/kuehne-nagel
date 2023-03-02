@@ -2,12 +2,16 @@ package com.logistic.kuehnenagel.service;
 
 import com.logistic.kuehnenagel.domain.City;
 import com.logistic.kuehnenagel.dto.CityPostDto;
+import com.logistic.kuehnenagel.dto.CitySearchDto;
+import com.logistic.kuehnenagel.error.ServiceError;
+import com.logistic.kuehnenagel.error.ServiceException;
 import com.logistic.kuehnenagel.repository.CityRepository;
+import com.logistic.kuehnenagel.util.SearchUtils;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,28 +23,28 @@ public class CityService {
 
     private final CityRepository cityRepository;
 
-    @Transactional(readOnly = true)
     public City getById(final Long id) {
-        return cityRepository.findById(id).orElseThrow(() ->
-                new EntityNotFoundException("City with '" + id + "' id not found."));
+        return cityRepository.findById(id).orElseThrow(() -> {
+            throw ServiceException
+                    .builder(ServiceError.MISSING_OBJECT_BY_ID)
+                    .messageParameters("City", id)
+                    .build();
+        });
     }
 
-    @Transactional
     public void createCities(final List<City> cityList) {
         cityRepository.saveAll(cityList);
     }
 
     @Transactional(readOnly = true)
-    public Page<City> getAll(final String name, final Pageable pageable) {
-        if (StringUtils.isBlank(name)) {
-            return cityRepository.findAll(pageable);
-        } else {
-            return cityRepository.findAllByName(name, pageable);
-        }
+    public Page<City> getAll(final CitySearchDto citySearchDto, final Pageable pageable) {
+        Specification<City> specification = SearchUtils.createEqualsStatement(citySearchDto::getName, "name");
+
+        return cityRepository.findAll(specification, pageable);
     }
 
     @Transactional
-    public City uploadCity(final CityPostDto cityPostDto) {
+    public City updateCity(final CityPostDto cityPostDto) {
         City city = getById(cityPostDto.getId());
 
         city.setName(cityPostDto.getName());

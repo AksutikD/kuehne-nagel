@@ -3,6 +3,7 @@ package com.logistic.kuehnenagel.rest;
 import com.logistic.kuehnenagel.converters.CityConverter;
 import com.logistic.kuehnenagel.dto.CityGetDto;
 import com.logistic.kuehnenagel.dto.CityPostDto;
+import com.logistic.kuehnenagel.dto.CitySearchDto;
 import com.logistic.kuehnenagel.service.CityService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
@@ -25,20 +26,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("api/v1/cities")
 @RequiredArgsConstructor
 @CrossOrigin
-@Validated
 public class CityController {
 
     private final CityService cityService;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public Page<CityGetDto> getAll(@RequestParam(defaultValue = "0") @PositiveOrZero int page,
-                                   @RequestParam(defaultValue = "10") @Min(1) @Max(30) int size,
+    public Page<CityGetDto> getAll(@RequestParam(defaultValue = "0") int page,
+                                   @RequestParam(defaultValue = "10") int size,
                                    @RequestParam(required = false) String name) {
-        return cityService.getAll(name, PageRequest.of(page, size)).map(CityConverter::cityToGetDtoConvert);
+        return cityService.getAll(new CitySearchDto(name), PageRequest.of(page, size)).map(CityConverter::cityToGetDtoConvert);
     }
 
     @PostMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public CityGetDto uploadCity(@RequestBody @Valid CityPostDto cityPostDto) {
-        return CityConverter.cityToGetDtoConvert(cityService.uploadCity(cityPostDto));
+    public CityGetDto updateCity(@RequestBody @Valid CityPostDto cityPostDto) {
+        return CityConverter.cityToGetDtoConvert(cityService.updateCity(cityPostDto));
     }
 }
