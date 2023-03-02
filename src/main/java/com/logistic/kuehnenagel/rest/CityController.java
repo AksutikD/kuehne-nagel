@@ -8,11 +8,12 @@ import com.logistic.kuehnenagel.service.CityService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,10 +29,9 @@ public class CityController {
     private final CityService cityService;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public Page<CityGetDto> getAll(@RequestParam(defaultValue = "0") int page,
-                                   @RequestParam(defaultValue = "10") int size,
+    public Page<CityGetDto> getAll(@PageableDefault(size = 20, sort = "id", direction = Sort.Direction.ASC) Pageable pageable,
                                    @RequestParam(required = false) String name) {
-        return cityService.getAll(new CitySearchDto(name), PageRequest.of(page, size)).map(CityConverter::cityToGetDtoConvert);
+        return cityService.getAll(new CitySearchDto(name), pageable).map(CityConverter::cityToGetDtoConvert);
     }
 
     @PutMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
