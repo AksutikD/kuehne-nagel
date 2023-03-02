@@ -7,7 +7,7 @@ spring:
   jpa:
     open-in-view: false
     hibernate:
-      ddl-auto: ${HIBERNATE_DDL_AUTO:update}
+      ddl-auto: ${HIBERNATE_DDL_AUTO:validate}
     properties:
       hibernate:
         order_updates: true
@@ -15,5 +15,8 @@ spring:
         jdbc:
           batch_size: 100
 #    show-sql: true
+  liquibase:
+    enabled: true
+    change-log: liquibase/liquibase-master.xml
 server:
   port: 8080

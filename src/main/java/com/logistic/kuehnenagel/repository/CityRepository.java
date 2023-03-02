@@ -10,13 +10,11 @@ import java.util.Optional;
 @Repository
 public interface CityRepository extends org.springframework.data.repository.Repository<City, Long> {
 
-    boolean existsByName(String name);
-
-    Iterable<City> saveAll(Iterable<City> entities);
+    void saveAll(Iterable<City> entities);
 
     Optional<City> findById(Long id);
 
-    Optional<City> findByName(String name);
-
     Page<City> findAll(Pageable pageable);
+
+    Page<City> findAllByName(String name, Pageable pageable);
 }

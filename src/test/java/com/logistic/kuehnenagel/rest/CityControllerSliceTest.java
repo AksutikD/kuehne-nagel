@@ -29,7 +29,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(CityController.class)
-public class CityController1Test {
+public class CityControllerSliceTest {
 
     @Autowired
     private MockMvc mockMvc;

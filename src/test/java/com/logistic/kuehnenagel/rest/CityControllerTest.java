@@ -1,8 +1,10 @@
 package com.logistic.kuehnenagel.rest;
 
+import com.logistic.kuehnenagel.domain.City;
 import com.logistic.kuehnenagel.dto.CityGetDto;
 import com.logistic.kuehnenagel.dto.CityPostDto;
 import com.logistic.kuehnenagel.error.ApiErrorResponse;
+import com.logistic.kuehnenagel.service.CityService;
 import com.logistic.kuehnenagel.util.RestResponsePage;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,38 +34,8 @@ public class CityControllerTest {
     @Autowired
     private TestRestTemplate restTemplate;
 
-    @Test
-    public void getCityByNameTest() {
-        HttpHeaders headers = new HttpHeaders();
-        headers.setAccept(List.of(MediaType.APPLICATION_JSON));
-        HttpEntity<String> entity = new HttpEntity<>(headers);
-        ResponseEntity<CityGetDto> responseEntity = restTemplate.exchange( "http://localhost:" + port + "/api/v1/cities/Tokyo",
-                HttpMethod.GET,
-                entity,
-                CityGetDto.class);
-
-        assertEquals(HttpStatus.OK.value(), responseEntity.getStatusCode().value());
-
-        CityGetDto cityGetDTO = responseEntity.getBody();
-
-        assertNotNull(responseEntity);
-        assertEquals(1, cityGetDTO.getId());
-        assertEquals("Tokyo", cityGetDTO.getName());
-        assertEquals("https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Skyscrapers_of_Shinjuku_2009_January.jpg/500px-Skyscrapers_of_Shinjuku_2009_January.jpg",
-                cityGetDTO.getImageUrl());
-
-        entity = new HttpEntity<>(headers);
-        ResponseEntity<ApiErrorResponse> responseEntityError = restTemplate.exchange( "http://localhost:" + port + "/api/v1/cities/asd",
-                HttpMethod.GET,
-                entity,
-                ApiErrorResponse.class);
-
-        assertEquals(HttpStatus.NOT_FOUND.value(), responseEntityError.getStatusCode().value());
-
-        ApiErrorResponse apiErrorResponse = responseEntityError.getBody();
-        assertNotNull(apiErrorResponse);
-        assertEquals("City with 'asd' name not found.", apiErrorResponse.getMessage());
-    }
+    @Autowired
+    private CityService cityService;
 
     @Test
     public void uploadCityTest() {
@@ -77,6 +49,13 @@ public class CityControllerTest {
                 CityGetDto.class);
 
         assertEquals(HttpStatus.OK.value(), responseEntity.getStatusCode().value());
+
+        City city = cityService.getById(2L);
+
+        assertNotNull(city);
+        assertEquals(city.getId(), cityPostDto.getId());
+        assertEquals(city.getName(), cityPostDto.getName());
+        assertEquals(city.getImageUrl(), cityPostDto.getImageUrl());
 
         CityGetDto cityGetDTO = responseEntity.getBody();
 
@@ -116,7 +95,32 @@ public class CityControllerTest {
 
         RestResponsePage<CityGetDto> page = responseEntity.getBody();
         assertNotNull(page);
-        assertEquals(96, page.getTotalPages());
+        assertEquals(98, page.getTotalPages());
         assertEquals(10, page.getContent().size());
+
+        entity = new HttpEntity<>(headers);
+        responseEntity = restTemplate.exchange( "http://localhost:" + port + "/api/v1/cities?name=Changsha",
+                HttpMethod.GET,
+                entity,
+                responseType);
+
+        assertEquals(HttpStatus.OK.value(), responseEntity.getStatusCode().value());
+
+        page = responseEntity.getBody();
+        assertNotNull(page);
+        assertEquals(1, page.getTotalPages());
+        assertEquals(2, page.getContent().size());
+
+        responseEntity = restTemplate.exchange( "http://localhost:" + port + "/api/v1/cities?name=asdasd",
+                HttpMethod.GET,
+                entity,
+                responseType);
+
+        assertEquals(HttpStatus.OK.value(), responseEntity.getStatusCode().value());
+
+        page = responseEntity.getBody();
+        assertNotNull(page);
+        assertEquals(0, page.getTotalPages());
+        assertEquals(0, page.getContent().size());
     }
 }

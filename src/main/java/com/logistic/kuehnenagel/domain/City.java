@@ -23,7 +23,7 @@ public class City {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "name", unique = true, length = 50, nullable = false)
+    @Column(name = "name", length = 50, nullable = false)
     private String name;
 
     @Column(name = "image_url")

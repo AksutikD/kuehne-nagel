@@ -18,10 +18,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Function;
-import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 
@@ -46,11 +42,8 @@ public class DatabaseConfig {
                 Stream<List<CsvCity>> csvCityStream = csvService.getStreamFromCSV(reader, CsvCity.class);
 
                 for (List<CsvCity> csvCitiesList : csvCityStream.toList()) {
-                    List<CsvCity> cityListUnique = csvCitiesList.stream()
-                            .filter(distinctByKey(CsvCity::getName)).toList();
-                    List<City> newCities = cityListUnique.stream()
+                    List<City> newCities = csvCitiesList.stream()
                             .filter(csvCity -> csvCity.getImageUrl().length() <= 255)
-                            .filter(city -> !cityService.existsByName(city.getName()))
                             .map(CityConverter::csvCityToCityConvert)
                             .toList();
                     cityService.createCities(newCities);
@@ -59,10 +52,5 @@ public class DatabaseConfig {
         }
 
         log.info("DB population is finished");
-    }
-
-    public static <T> Predicate<T> distinctByKey(Function<? super T, ?> keyExtractor) {
-        Map<Object, Boolean> seen = new ConcurrentHashMap<>();
-        return t -> seen.putIfAbsent(keyExtractor.apply(t), Boolean.TRUE) == null;
     }
 }

@@ -1,7 +1,7 @@
 package com.logistic.kuehnenagel.rest;
 
 import com.logistic.kuehnenagel.error.ApiErrorResponse;
-import com.logistic.kuehnenagel.error.ResourceNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,9 +14,9 @@ import org.springframework.web.util.UrlPathHelper;
 @RestControllerAdvice
 public class ExceptionControllerHandler {
 
-    @ExceptionHandler(ResourceNotFoundException.class)
+    @ExceptionHandler(EntityNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity<ApiErrorResponse> handleResourceNotFoundException(ResourceNotFoundException ex, HttpServletRequest request) {
+    public ResponseEntity<ApiErrorResponse> handleResourceNotFoundException(EntityNotFoundException ex, HttpServletRequest request) {
         ApiErrorResponse response = new ApiErrorResponse(HttpStatus.NOT_FOUND.value(),
                 HttpStatus.NOT_FOUND.getReasonPhrase(), ex.getMessage(),
                 new UrlPathHelper().getPathWithinApplication(request));

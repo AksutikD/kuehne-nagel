@@ -20,6 +20,7 @@
         <liquibase.version>4.19.0</liquibase.version>
         <opencsv.version>5.7.1</opencsv.version>
         <google.guava.version>31.0.1-jre</google.guava.version>
+        <liquibase.version>4.19.0</liquibase.version>
     </properties>
 
     <dependencies>
@@ -40,7 +41,11 @@
             <artifactId>opencsv</artifactId>
             <version>${opencsv.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+            <version>4.19.0</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
@@ -66,6 +71,18 @@
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-maven-plugin</artifactId>
+                <version>4.19.0</version>
+                <configuration>
+                    <driver>org.postgresql.Driver</driver>
+                    <url>jdbc:postgresql://localhost:5432/kuehne_nagel_db</url>
+                    <username>postgres</username>
+                    <password>postgres</password>
+                    <outputChangeLogFile>src/main/resources/liquibase-outputChangeLog.xml</outputChangeLogFile>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
