@@ -35,7 +35,7 @@ public class CityService {
     private CityRepository cityRepository;
 
     @Test
-    public void getByIdSuccessTest() {
+    public void getByIdSuccess() {
         City city = new City(1L, "Tokyo", "http://testurl");
 
         when(cityRepository.findById(anyLong())).thenReturn(Optional.of(city));
@@ -47,7 +47,7 @@ public class CityService {
     }
 
     @Test
-    public void getByIdThrowsExceptionSuccessTest() {
+    public void getByIdThrowsExceptionSuccess() {
         when(cityRepository.findById(1L)).thenThrow(ServiceException
                 .builder(ServiceError.MISSING_OBJECT_BY_ID)
                 .messageParameters("City", 1L)
@@ -57,7 +57,7 @@ public class CityService {
     }
 
     @Test
-    public void createThreeCitiesSuccessTest() {
+    public void createThreeCitiesSuccess() {
         List<City> cities = List.of(
                 new City(1L, "Tokyo", "http://testurl"),
                 new City(2L, "Singapore", "http://testurl"),
@@ -69,14 +69,14 @@ public class CityService {
     }
 
     @Test
-    public void getAllCitiesSuccessTest() {
+    public void getAllCitiesSuccess() {
         cityService.getAll(new CitySearchDto("Tokyo"), PageRequest.of(0, 10));
 
         verify(cityRepository, times(1)).findAll(any(Specification.class), any(Pageable.class));
     }
 
     @Test
-    public void updateCitySuccessTest() {
+    public void updateCitySuccess() {
         CityPostDto cityPostDto = new CityPostDto(1L, "Tokyo", "http://testurl");
         City city = new City(1L, "Abu Dhabi", "http://changedUrl");
 

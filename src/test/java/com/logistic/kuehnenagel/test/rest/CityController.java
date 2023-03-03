@@ -38,7 +38,7 @@ public class CityController {
     private CityService cityService;
 
     @Test
-    public void updateCitySuccessTest() {
+    public void updateCitySuccess() {
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(List.of(MediaType.APPLICATION_JSON));
         CityPostDto cityPostDto = new CityPostDto(2L, "Jakarta2", "http://test.com/1.png");
@@ -66,7 +66,7 @@ public class CityController {
     }
 
     @Test
-    public void updateCityFailureTest() {
+    public void updateCityFailure() {
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(List.of(MediaType.APPLICATION_JSON));
         CityPostDto cityPostDto = new CityPostDto(null, "Jakarta2", "http://test.com/1.png");
@@ -84,7 +84,7 @@ public class CityController {
     }
 
     @Test
-    public void getAllCitiesByDefaultSuccessTest() {
+    public void getAllCitiesByDefaultSuccess() {
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(List.of(MediaType.APPLICATION_JSON));
         HttpEntity<String> entity = new HttpEntity<>(headers);
@@ -105,7 +105,7 @@ public class CityController {
     }
 
     @Test
-    public void getAllCitiesByNameSuccessTest() {
+    public void getAllCitiesByNameSuccess() {
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(List.of(MediaType.APPLICATION_JSON));
         HttpEntity<String> entity = new HttpEntity<>(headers);

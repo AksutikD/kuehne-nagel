@@ -26,7 +26,7 @@ public class CsvService {
     Resource resourceFile;
 
     @Test
-    public void getStreamFromCSVSuccessTest() throws IOException {
+    public void getStreamFromCSVSuccess() throws IOException {
         try (Reader reader = new BufferedReader(new InputStreamReader(resourceFile.getInputStream()))) {
             Stream<List<CsvCity>> csvCityStream = csvService.getStreamFromCSV(reader, CsvCity.class);
             List<List<CsvCity>> csvCityList = csvCityStream.toList();
