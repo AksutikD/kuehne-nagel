@@ -11,7 +11,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -28,13 +27,13 @@ public class CityController {
 
     private final CityService cityService;
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping
     public Page<CityGetDto> getAll(@PageableDefault(size = 20, sort = "id", direction = Sort.Direction.ASC) Pageable pageable,
                                    @RequestParam(required = false) String name) {
         return cityService.getAll(new CitySearchDto(name), pageable).map(CityConverter::cityToGetDtoConvert);
     }
 
-    @PutMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping
     public CityGetDto updateCity(@RequestBody @Valid CityPostDto cityPostDto) {
         return CityConverter.cityToGetDtoConvert(cityService.updateCity(cityPostDto));
     }

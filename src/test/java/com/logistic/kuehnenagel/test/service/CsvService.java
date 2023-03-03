@@ -1,7 +1,5 @@
-package com.logistic.kuehnenagel.service;
+package com.logistic.kuehnenagel.test.service;
 
-import com.logistic.kuehnenagel.converters.CityConverter;
-import com.logistic.kuehnenagel.domain.City;
 import com.logistic.kuehnenagel.domain.csv.CsvCity;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,16 +12,15 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.List;
-import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-public class CsvServiceTest {
+public class CsvService {
 
     @Autowired
-    private CsvService csvService;
+    private com.logistic.kuehnenagel.service.CsvService csvService;
 
     @Value("classpath:static/cities.csv")
     Resource resourceFile;

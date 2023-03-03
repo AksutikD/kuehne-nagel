@@ -1,4 +1,4 @@
-package com.logistic.kuehnenagel.service;
+package com.logistic.kuehnenagel.test.service;
 
 import com.logistic.kuehnenagel.domain.City;
 import com.logistic.kuehnenagel.dto.CityPostDto;
@@ -26,10 +26,10 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
-public class CityServiceTest {
+public class CityService {
 
     @Autowired
-    private CityService cityService;
+    private com.logistic.kuehnenagel.service.CityService cityService;
 
     @MockBean
     private CityRepository cityRepository;

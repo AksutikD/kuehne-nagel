@@ -3,7 +3,7 @@ package com.logistic.kuehnenagel.error;
 import java.util.Optional;
 
 /**
- * Global exception class for our application to prevent
+ * Global exception class for our application to prevent {@link com.logistic.kuehnenagel.rest.ExceptionControllerHandler} from growing.
  */
 public class ServiceException extends RuntimeException {
 
@@ -11,7 +11,7 @@ public class ServiceException extends RuntimeException {
     private final transient Object[] messageParameters;
 
     private ServiceException(Builder builder) {
-        super(builder.cause);
+        super();
         this.error = builder.error;
         this.messageParameters = builder.messageParameters;
     }
@@ -24,10 +24,6 @@ public class ServiceException extends RuntimeException {
         return error;
     }
 
-    public Object[] getMessageParameters() {
-        return messageParameters.clone();
-    }
-
     @Override
     public String getMessage() {
         return error.getMessage(messageParameters);
@@ -36,18 +32,11 @@ public class ServiceException extends RuntimeException {
     public static class Builder {
 
         private final ServiceError error;
-        private Throwable cause;
         private Object[] messageParameters;
 
         private Builder(ServiceError error) {
             this.error = error;
-            this.cause = null;
             this.messageParameters = new Object[0];
-        }
-
-        public Builder cause(Throwable cause) {
-            this.cause = cause;
-            return this;
         }
 
         public Builder messageParameters(Object... params) {

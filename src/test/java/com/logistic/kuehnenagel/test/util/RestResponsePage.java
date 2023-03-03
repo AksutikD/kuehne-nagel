@@ -1,4 +1,4 @@
-package com.logistic.kuehnenagel.util;
+package com.logistic.kuehnenagel.test.util;
 
 import java.util.ArrayList;
 import java.util.List;

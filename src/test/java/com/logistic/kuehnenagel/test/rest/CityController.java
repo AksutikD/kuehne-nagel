@@ -1,11 +1,11 @@
-package com.logistic.kuehnenagel.rest;
+package com.logistic.kuehnenagel.test.rest;
 
 import com.logistic.kuehnenagel.domain.City;
 import com.logistic.kuehnenagel.dto.CityGetDto;
 import com.logistic.kuehnenagel.dto.CityPostDto;
 import com.logistic.kuehnenagel.error.ApiErrorResponse;
 import com.logistic.kuehnenagel.service.CityService;
-import com.logistic.kuehnenagel.util.RestResponsePage;
+import com.logistic.kuehnenagel.test.util.RestResponsePage;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
-public class CityControllerTest {
+public class CityController {
     @Value(value="${local.server.port}")
     private int port;
 

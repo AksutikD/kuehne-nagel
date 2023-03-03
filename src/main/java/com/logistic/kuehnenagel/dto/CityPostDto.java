@@ -20,10 +20,10 @@ public class CityPostDto {
     private Long id;
 
     @NotBlank
-    @Size(max = 255, message = "Name must be between 1 and 50 characters long")
+    @Size(max = 255)
     private String name;
 
     @NotBlank
-    @Size(max = 750, message = "Name must be between 12 and 750 characters long")
+    @Size(max = 750)
     private String imageUrl;
 }
