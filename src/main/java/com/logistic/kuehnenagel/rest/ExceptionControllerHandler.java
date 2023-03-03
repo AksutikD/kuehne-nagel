@@ -16,7 +16,7 @@ import org.springframework.web.util.UrlPathHelper;
 public class ExceptionControllerHandler {
 
     @ExceptionHandler(ServiceException.class)
-    public ResponseEntity<ApiErrorResponse> handleResourceNotFoundException(ServiceException ex, HttpServletRequest request) {
+    public ResponseEntity<ApiErrorResponse> handleServiceException(ServiceException ex, HttpServletRequest request) {
         ApiErrorResponse response = new ApiErrorResponse(ex.getError().getStatus().value(),
                 ex.getError().getStatus().getReasonPhrase(), ex.getMessage(),
                 new UrlPathHelper().getPathWithinApplication(request));
