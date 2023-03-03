@@ -16,6 +16,10 @@ import java.util.stream.StreamSupport;
 
 @Service
 @RequiredArgsConstructor
+/**
+ * Service class for processing CSV files.
+ * It provides method which returns steam of chunks of the provided class.
+ */
 public class CsvService {
 
     @Value("${spring.jpa.properties.hibernate.jdbc.batch_size}")
