@@ -35,7 +35,7 @@ services:
       DATASOURCE_USERNAME: postgres
       DATASOURCE_PASSWORD: postgres
       DDRIVER_CLASS_NAME: org.postgresql.Driver
-      HIBERNATE_DDL_AUTO: update
+      HIBERNATE_DDL_AUTO: validate
     ports:
       - "8080:8080"
     depends_on:
