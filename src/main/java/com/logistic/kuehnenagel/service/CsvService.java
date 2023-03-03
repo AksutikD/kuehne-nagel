@@ -31,7 +31,7 @@ public class CsvService {
      * @param reader Stream reader.
      * @param tClass the type of the object for CSV mapping. See {@link com.logistic.kuehnenagel.domain.csv.CsvCity} f.e.
      *
-     * @return a chunk of streams.
+     * @return stream of chunks
      */
     public <T> Stream<List<T>> getStreamFromCSV(Reader reader, Class<T> tClass) {
         CsvToBean<T> csvToBean =  new CsvToBeanBuilder<T>(reader)
