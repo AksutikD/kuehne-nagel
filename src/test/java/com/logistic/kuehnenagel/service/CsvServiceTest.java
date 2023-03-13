@@ -1,4 +1,4 @@
-package com.logistic.kuehnenagel.test.service;
+package com.logistic.kuehnenagel.service;
 
 import com.logistic.kuehnenagel.domain.csv.CsvCity;
 import org.junit.jupiter.api.Test;
@@ -17,7 +17,7 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-public class CsvService {
+public class CsvServiceTest {
 
     @Autowired
     private com.logistic.kuehnenagel.service.CsvService csvService;

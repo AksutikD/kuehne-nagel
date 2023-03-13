@@ -1,11 +1,11 @@
-package com.logistic.kuehnenagel.test.rest;
+package com.logistic.kuehnenagel.rest;
 
 import com.logistic.kuehnenagel.domain.City;
 import com.logistic.kuehnenagel.dto.CityGetDto;
 import com.logistic.kuehnenagel.dto.CityPostDto;
 import com.logistic.kuehnenagel.error.ApiErrorResponse;
 import com.logistic.kuehnenagel.service.CityService;
-import com.logistic.kuehnenagel.test.util.RestResponsePage;
+import com.logistic.kuehnenagel.util.RestResponsePage;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
-public class CityController {
+public class CityControllerTest {
     @Value(value="${local.server.port}")
     private int port;
 
@@ -43,8 +43,8 @@ public class CityController {
         headers.setAccept(List.of(MediaType.APPLICATION_JSON));
         CityPostDto cityPostDto = new CityPostDto(2L, "Jakarta2", "http://test.com/1.png");
         HttpEntity<CityPostDto> entity = new HttpEntity<>(cityPostDto, headers);
-        ResponseEntity<CityGetDto> responseEntity = restTemplate.exchange( "http://localhost:" + port + "/api/v1/cities/",
-                HttpMethod.POST,
+        ResponseEntity<CityGetDto> responseEntity = restTemplate.exchange( "http://localhost:" + port + "/api/v1/cities",
+                HttpMethod.PUT,
                 entity,
                 CityGetDto.class);
 
@@ -71,8 +71,8 @@ public class CityController {
         headers.setAccept(List.of(MediaType.APPLICATION_JSON));
         CityPostDto cityPostDto = new CityPostDto(null, "Jakarta2", "http://test.com/1.png");
         HttpEntity<CityPostDto> entity = new HttpEntity<>(cityPostDto, headers);
-        ResponseEntity<ApiErrorResponse> responseEntityError = restTemplate.exchange( "http://localhost:" + port + "/api/v1/cities/",
-                HttpMethod.POST,
+        ResponseEntity<ApiErrorResponse> responseEntityError = restTemplate.exchange( "http://localhost:" + port + "/api/v1/cities",
+                HttpMethod.PUT,
                 entity,
                 ApiErrorResponse.class);
 
@@ -100,8 +100,8 @@ public class CityController {
 
         RestResponsePage<CityGetDto> page = responseEntity.getBody();
         assertNotNull(page);
-        assertEquals(100, page.getTotalPages());
-        assertEquals(10, page.getContent().size());
+        assertEquals(50, page.getTotalPages());
+        assertEquals(20, page.getContent().size());
     }
 
     @Test
